@@ -31,9 +31,9 @@ AddToClassPath[FileNameJoin[{$HomeDirectory,"xxl","jar"}]];
 connection[host_String,id_String,user_String,pwd_String]:=JavaBlock[
 	Module[
 		{
-			cb=ImplementJavaInterface["mcivicm.mqtt.Connection$OnConnectionListener",{"onConnected"->context<>"onConnected"}]
+			cb=ImplementJavaInterface["xxl.mqtt.Connection$OnConnectionListener",{"onConnected"->context<>"onConnected"}]
 		},
-		JavaNew["mcivicm.mqtt.Connection",host,id,user,pwd,cb]
+		JavaNew["xxl.mqtt.Connection",host,id,user,pwd,cb]
 	]
 ]
 

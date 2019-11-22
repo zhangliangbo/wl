@@ -67,6 +67,20 @@ selectNoEmptyLines[dir_String,lineNum_Integer,part_Integer,OptionsPattern[]]:=Mo
 ]
 
 
+selectNoEmptyLines[files_List,lineNum_Integer]:=Module[
+	{deleteLine, num=0, text=""},
+	deleteLine[path_]:=StringReplace[Import[path,"Text"],RegularExpression["\\n{2,}"]->"\n"];
+	Do[
+		text=text<>deleteLine[Part[files,n]];
+		num+=fileLines[Part[files,n]];
+		If[num>lineNum,Break[]]
+		,
+		{n,Length[files]}
+	];
+	text
+]
+
+
 End[]
 
 
