@@ -6,6 +6,9 @@ BeginPackage["xxl`spring`Jpa`"]
 generateBeanAndJpa::usage="generateBeanAndJpa[cls_String]\:751f\:6210Bean\:6587\:4ef6\:548cJpa\:6587\:4ef6";
 
 
+generateDocAndMongo::usage="generateDocAndMongo[cls_String]\:751f\:6210Doc\:6587\:4ef6\:548cMongo\:6587\:4ef6";
+
+
 generateQueryBean::usage="generateQueryBean[cls,properties]\:751f\:6210\:67e5\:8be2Bean";
 
 
@@ -64,7 +67,7 @@ public class "<>cls<>" {
 
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.stereotype.Repository;
-import xxl.server.rice.bean."<>cls<>";
+import "<>pkg<>".bean."<>cls<>";
 
 @Repository
 public interface "<>cls<>"Jpa extends JpaRepositoryImplementation<"<>cls<>", Long> {
@@ -139,6 +142,64 @@ public class "<>cls<>"Ctr {
 }
 ","Text"]
 	
+]
+
+
+Options[generateDocAndMongo]={"dir"->$HomeDirectory,"pkg"->"xxl"}
+
+
+generateDocAndMongo[cls_String,OptionsPattern[]]:=Module[
+	{
+		dir=OptionValue["dir"],
+		pkg=OptionValue["pkg"],
+		docDir=FileNameJoin[{OptionValue["dir"],"doc"}],
+		mongoDir=FileNameJoin[{OptionValue["dir"],"mongo"}],
+		docFile=FileNameJoin[{OptionValue["dir"],"doc",cls<>".java"}],
+		mongoFile=FileNameJoin[{OptionValue["dir"],"mongo",cls<>"Mongo.java"}]
+	},
+	If[!FileExistsQ[docDir],CreateDirectory[docDir]];
+	If[!FileExistsQ[mongoDir],CreateDirectory[mongoDir]];
+	If[
+		!FileExistsQ[docFile],
+		Export[docFile,
+		"package "<>pkg<>".doc;
+
+import io.swagger.annotations.ApiModel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@ApiModel
+@Setter
+@Getter
+@ToString
+@Document
+public class "<>cls<>" {
+
+  @Id
+  private String id;
+  
+}
+","Text"]
+	];
+	If[
+		!FileExistsQ[mongoFile],
+		Export[mongoFile,
+		"package "<>pkg<>".mongo;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+import "<>pkg<>".doc."<>cls<>";
+
+@Repository
+public interface "<>cls<>"Mongo extends MongoRepository<"<>cls<>", String> {
+
+}
+","Text"]
+	];
+	"Done"
 ]
 
 
