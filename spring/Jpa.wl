@@ -64,7 +64,7 @@ public class "<>cls<>" {
 
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.stereotype.Repository;
-import xxl.server.rice.bean."<>cls<>";
+import "<>pkg<>".bean."<>cls<>";
 
 @Repository
 public interface "<>cls<>"Jpa extends JpaRepositoryImplementation<"<>cls<>", Long> {
