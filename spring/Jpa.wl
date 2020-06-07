@@ -45,12 +45,15 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.EntityListeners;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @ApiModel
 @Setter
 @Getter
 @ToString
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class "<>cls<>" {
 
   @Id
