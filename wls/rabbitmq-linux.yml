@@ -1,0 +1,20 @@
+version: "3.7"
+networks:
+  xxl:
+    external: true
+services:
+  rabbitmq:
+    image: zhangliangbo/xxl.rabbitmq:latest
+    networks:
+      - xxl
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=mqtt
+      - RABBITMQ_DEFAULT_PASS=mqtt
+    ports:
+      - "15672:15672"
+      - "1883:1883"
+      - "5672:5672"
+    deploy:
+      replicas: 1
