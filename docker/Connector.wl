@@ -18,25 +18,28 @@ mysqlCli::usage="mysqlCli[] \:9ed8\:8ba4\:5bc6\:7801\nmysqlCli[user,pwd] \:4f7f\
 Begin["`Private`"]
 
 
-containerId[image_String]:=RunProcess[{"docker.exe","container","ls"},"StandardOutput"]/.
+dockerExec[]=Switch[$OperatingSystem,"Windows","docker.exe","Unix","docker",_,"docker"]
+
+
+containerId[image_String]:=RunProcess[{xxl`docker`Connector`Private`dockerExec[],"container","ls"},"StandardOutput"]/.
 in_String:>StringCases[in,"\n"~~x:WordCharacter..~~Whitespace~~image<>":":>x]/.
 in_String:>RunProcess[{"docker.exe","inspect",in},"StandardOutput"]/.
 in_String:>StringCases[in,"Id\": \""~~Shortest[x__]~~"\"":>x]//Flatten//First
 
 
 redisCli[]:=xxl`docker`Connector`containerId["redis"]/.
-in_String:>Run["docker.exe exec -it "<>in<>" redis-cli"]
+in_String:>Run[xxl`docker`Connector`Private`dockerExec[]<>" exec -it "<>in<>" redis-cli"]
 
 
 mongoCli[user_String,pwd_String]:=xxl`docker`Connector`containerId["mongo"]/.
-in_String:>Run["docker.exe exec -it "<>in<>" mongo -u "<>user<>" -p "<>pwd]
+in_String:>Run[xxl`docker`Connector`Private`dockerExec[]<>" exec -it "<>in<>" mongo -u "<>user<>" -p "<>pwd]
 
 
 mongoCli[]:=xxl`docker`Connector`mongoCli["root","civic"]
 
 
 mysqlCli[user_String,pwd_String]:=xxl`docker`Connector`containerId["mysql"]/.
-in_String:>Run["docker.exe exec -it "<>in<>" mysql -u "<>user<>" -p"<>pwd]
+in_String:>Run[xxl`docker`Connector`Private`dockerExec[]<>" exec -it "<>in<>" mysql -u "<>user<>" -p"<>pwd]
 
 
 mysqlCli[]:=xxl`docker`Connector`mysqlCli["root","civic"]
