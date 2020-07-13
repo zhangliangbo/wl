@@ -28,7 +28,7 @@ in_String:>StringCases[in,"Id\": \""~~Shortest[x__]~~"\"":>x]//Flatten//First
 
 
 redisCli[]:=xxl`docker`Connector`containerId["redis"]/.
-in_String:>Run[xxl`docker`Connector`Private`dockerExec[]<>" exec -it "<>in<>" redis-cli"]
+in_String:>Run[xxl`docker`Connector`Private`dockerExec[]<>" exec -it "<>in<>" redis-cli -a 123456"]
 
 
 mongoCli[user_String,pwd_String]:=xxl`docker`Connector`containerId["mongo"]/.
