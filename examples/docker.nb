@@ -1,0 +1,65 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      1789,         57]
+NotebookOptionsPosition[      1263,         39]
+NotebookOutlinePosition[      1622,         55]
+CellTagsIndexPosition[      1579,         52]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<xxl`docker`Connector`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.8017788833912096`*^9, 3.8017788990971937`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"99177fe0-3c27-41fb-9b96-9b6ef18f7d1b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"redisCli", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.801778901523219*^9, 3.8017789036042085`*^9}, {
+  3.8031779014622912`*^9, 3.803177903178323*^9}},
+ CellLabel->"In[2]:=",ExpressionUUID->"ceb580b9-a205-4870-b992-657e8ad867da"],
+
+Cell[BoxData[
+ RowBox[{"-", "1073741510"}]], "Output",
+ CellChangeTimes->{3.803177919722292*^9},
+ CellLabel->"Out[2]=",ExpressionUUID->"7968235b-fb0c-4c2a-8a29-6ddfbbbe567d"]
+}, Open  ]]
+},
+WindowSize->{1020, 663},
+WindowMargins->{{Automatic, 77}, {-138, Automatic}},
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (2019\:5e745\:670818\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 234, 3, 45, "Input",ExpressionUUID->"99177fe0-3c27-41fb-9b96-9b6ef18f7d1b"],
+Cell[CellGroupData[{
+Cell[817, 27, 253, 4, 28, "Input",ExpressionUUID->"ceb580b9-a205-4870-b992-657e8ad867da"],
+Cell[1073, 33, 174, 3, 64, "Output",ExpressionUUID->"7968235b-fb0c-4c2a-8a29-6ddfbbbe567d"]
+}, Open  ]]
+}
+]
+*)
+
