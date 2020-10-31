@@ -3,16 +3,16 @@
 BeginPackage["xxl`github`Level0`",{"JLink`"}]
 
 
-toAssoc::usage="toAssoc[object] map\:8f6cassociation"
+toAssoc::usage="toAssoc[map] map\:8f6cassociation"
 
 
-toDataset::usage="toAssoc[object] map\:8f6cDataset"
+toDataset::usage="toDataset[map] map\:8f6cDataset"
 
 
 toJson::usage="toJson[json] json\:8f6cassociation"
 
 
-toJsonDataset::usage="toJsonDataset json\:8f6cDataset"
+toJsonDataset::usage="toJsonDataset[json] json\:8f6cDataset"
 
 
 Begin["`Private`"]

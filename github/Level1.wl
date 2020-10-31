@@ -30,7 +30,7 @@ Begin["`Private`"]
 If[JLink`JavaLink[]===Null,JLink`InstallJava[]];
 
 
-JLink`AddToClassPath["D:\\level\\level1\\build\\libs\\level1-1.0.0-SNAPSHOT-all.jar"];
+JLink`AddToClassPath["D:\\level\\level1\\build\\libs\\level1-1.0.0-all.jar"];
 
 
 If[FreeQ[LoadedJavaClasses[],JavaClass[#,___]],LoadJavaClass[#]]&/@
