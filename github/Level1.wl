@@ -24,6 +24,9 @@ sqlTables::usage="sqlTables[database] \:5217\:51fa\:8868\:683c"
 sqlColumns::usage="sqlColumns[database,table] \:8868\:683c\:5143\:4fe1\:606f"
 
 
+sqlBatch::usage="sqlBatch[sql,params] \:6279\:91cf\:4fee\:6539"
+
+
 Begin["`Private`"]
 
 
@@ -50,13 +53,13 @@ dataSource[url_String,username_String,password_String,sshHost_String,sshPort_Int
 ClearAll[sqlSelect]
 
 
-sqlSelect[sql_String,params_]:=xxl`jdbc`SQLExecute`sqlSelect[sql,params]//JLink`JavaObjectToExpression
+sqlSelect[sql_String,params_]:=xxl`jdbc`SQLExecute`sqlSelect[sql,Map[MakeJavaObject,params,{1}]]//JLink`JavaObjectToExpression
 
 
 ClearAll[sqlUpdate]
 
 
-sqlUpdate[sql_String,params_]:=xxl`jdbc`SQLExecute`sqlUpdate[sql,params]//JLink`JavaObjectToExpression
+sqlUpdate[sql_String,params_]:=xxl`jdbc`SQLExecute`sqlUpdate[sql,Map[MakeJavaObject,params,{1}]]//JLink`JavaObjectToExpression
 
 
 ClearAll[sqlDatabases]
@@ -78,6 +81,12 @@ sqlColumns[database_String,table_String]:=xxl`jdbc`SQLExecute`sqlColumns[databas
 
 
 sqlColumns[table_String]:=xxl`jdbc`SQLExecute`sqlColumns[MakeJavaObject[Null],table]//JLink`JavaObjectToExpression
+
+
+ClearAll[sqlBatch]
+
+
+sqlBatch[sql_String,params_]:=xxl`jdbc`SQLExecute`sqlBatch[sql,Map[MakeJavaObject,params,{2}]]//JLink`JavaObjectToExpression
 
 
 End[]
