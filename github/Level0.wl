@@ -3,7 +3,13 @@
 BeginPackage["xxl`github`Level0`",{"JLink`"}]
 
 
+csvAssoc::usage="csvAssoc[csv] csv\:8f6cassociation"
+
+
 toAssoc::usage="toAssoc[map] map\:8f6cassociation"
+
+
+toList::usage="toList[map] map\:8f6c\:5217\:8868"
 
 
 toDataset::usage="toDataset[map] map\:8f6cDataset"
@@ -44,6 +50,12 @@ toAssoc[object_]:=JavaBlock[
 SetAttributes[toAssoc,{Listable}]
 
 
+ClearAll[toList]
+
+
+toList[object_]:=xxl`github`Level0`toAssoc[object]//Prepend[Values[#],Keys[First[#]]]&
+
+
 ClearAll[toDataset]
 
 
@@ -60,6 +72,15 @@ ClearAll[toJsonDataset]
 
 
 toJsonDataset[json_String]:=xxl`github`Level0`toJson[json]//Dataset
+
+
+ClearAll[csvAssoc]
+
+
+csvAssoc[csv_List]:=Module[
+	{head=csv//First,data=csv//Rest,columnNum=csv//First//Length},
+	Map[Association[Table[head[[i]]->#[[i]],{i,1,columnNum}]]&,data,{1}]
+]
 
 
 End[]

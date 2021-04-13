@@ -18,7 +18,7 @@ ClearAll[noDrop];
 noDrop[path_String]:=Module[
 	{dst=FileNameJoin[{FileNameTake[path,{1,-2}],FileBaseName[path]<>"_no_drop."<>FileExtension[path]}],
 	sql=Import[path,"Text"]},
-	Export[dst,StringTake[sql,{StringPosition[sql,"BEGIN;\n"][[-1,-1]],-1}],"Text"]
+	Export[dst,StringTake[sql,{StringPosition[sql,"BEGIN;\n"][[-1,-1]]+1,StringPosition[sql,"\nCOMMIT;"][[1,1]]-1}],"Text"]
 ]
 
 

@@ -27,6 +27,9 @@ sqlColumns::usage="sqlColumns[database,table] \:8868\:683c\:5143\:4fe1\:606f"
 sqlBatch::usage="sqlBatch[sql,params] \:6279\:91cf\:4fee\:6539"
 
 
+myBatisPlusGenerate::usage="myBatisPlusGenerate[tables] \:751f\:6210mybatis plus\:4fe1\:606f"
+
+
 Begin["`Private`"]
 
 
@@ -87,6 +90,55 @@ ClearAll[sqlBatch]
 
 
 sqlBatch[sql_String,params_]:=xxl`jdbc`SQLExecute`sqlBatch[sql,Map[MakeJavaObject,params,{2}]]//JLink`JavaObjectToExpression
+
+
+(*mybatis plus*)
+
+
+If[FreeQ[LoadedJavaClasses[],JavaClass[#,___]],LoadJavaClass[#]]&/@
+	{"xxl.mybatisPlus.Generator"};
+
+
+ClearAll[myBatisPlusGenerate]
+
+
+myBatisPlusGenerate[tables_List,OptionsPattern[]]:=xxl`mybatisPlus`Generator`generate[
+	OptionValue["author"],
+	OptionValue["outputDir"],
+	OptionValue["entitySuffix"],
+	OptionValue["url"],
+	OptionValue["driver"],
+	OptionValue["username"],
+	OptionValue["password"],
+	OptionValue["parent"],
+	OptionValue["entity"],
+	OptionValue["mapper"],
+	OptionValue["xml"],
+	OptionValue["service"],
+	OptionValue["serviceImpl"],
+	OptionValue["controller"],
+	OptionValue["tablePrefix"],
+	tables
+]
+
+
+Options[myBatisPlusGenerate]={
+"author"->"zlb",
+"outputDir"->"D:\\codeGen",
+"entitySuffix"->"Po",
+"url"->"",
+"driver"->"com.mysql.cj.jdbc.Driver",
+"username"->"",
+"password"->"",
+"parent"->"",
+"entity"->"output",
+"mapper"->"output",
+"xml"->"output",
+"service"->"output",
+"serviceImpl"->"output",
+"controller"->"output",
+"tablePrefix"->"cs_"
+};
 
 
 End[]
