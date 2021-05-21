@@ -18,10 +18,13 @@ queueGet::usage="queueGet[queue,count,requeue]\:83b7\:53d6\:961f\:5217\:7684\:65
 queueGetOne::usage="queueGetOne[queue]\:83b7\:53d6\:961f\:5217\:7684\:4e00\:6761\:6570\:636e"
 
 
-emptyExchangeBindings::usage="emptyExchangeBindings[]\:7a7a\:4ea4\:6362\:5668\:7ed1\:5b9a\:7684\:8def\:7531\:952e"
+exchanges::usage="exchanges[]\:83b7\:53d6\:6240\:6709\:4ea4\:6362\:673a"
 
 
-emptyExchangePublish::usage="emptyExchangePublish[queue,data]\:76f4\:63a5\:5f80\:961f\:5217\:53d1\:4e00\:6761\:6570\:636e"
+exchangeBindings::usage="exchangeBindings[exchange]\:4ea4\:6362\:673a\:7684\:7ed1\:5b9a\:4fe1\:606f"
+
+
+exchangePublish::usage="emptyExchangePublish[queue,data]\:76f4\:63a5\:5f80\:961f\:5217\:53d1\:4e00\:6761\:6570\:636e"
 
 
 Begin["`Private`"]
@@ -100,37 +103,67 @@ queueGetOne[queue_String,requeue:(True|False)]:=queueGet[queue,1,requeue]//First
 queueGetOne[queue_String]:=queueGetOne[queue,True]
 
 
-ClearAll[emptyExchangeBindings]
+ClearAll[exchangeBindings]
 
 
-emptyExchangeBindings[]:=URLRead[
+exchangeBindings[exchange_String]:=URLRead[
 	HTTPRequest[
-		rabbitWebInfo["host"]<>":"<>rabbitWebInfo["port"]<>"/api/exchanges/"<>URLEncode["/"]<>"/"<>URLEncode[""]<>"/bindings/source",
+		rabbitWebInfo["host"]<>":"<>rabbitWebInfo["port"]<>"/api/exchanges/"<>URLEncode["/"]<>"/"<>exchange<>"/bindings/source",
 		Association["Username"->rabbitWebInfo["username"],"Password"->rabbitWebInfo["password"]]
 	],
 	"Body"
 ]//xxl`github`Level0`toJson
 
 
-ClearAll[emptyExchangePublish]
+ClearAll[exchangePublish]
 
 
-emptyExchangePublish[queue_String,data_Association|data_List]:=URLRead[
+Options[exchangePublish]={"headers"->Association[]}
+
+
+exchangePublish[exchange_String,routeKey_String,data_String,OptionsPattern[]]:=URLRead[
 	HTTPRequest[
-		rabbitWebInfo["host"]<>":"<>rabbitWebInfo["port"]<>"/api/exchanges/"<>URLEncode["/"]<>"/"<>URLEncode[""]<>"/publish",
+		rabbitWebInfo["host"]<>":"<>rabbitWebInfo["port"]<>"/api/exchanges/"<>URLEncode["/"]<>"/"<>exchange<>"/publish",
 		Association[
 			"Username"->rabbitWebInfo["username"],
 			"Password"->rabbitWebInfo["password"],
 			Method->"POST",
 			"Body"->ExportString[
-				Association["properties"->Association["delivery_mode"->1,"headers"->Association[]],
-				"routing_key"->queue,
-				"payload"->ExportString[data,"JSON"],
+				Association["properties"->Association["delivery_mode"->1,"headers"->OptionValue["headers"]],
+				"routing_key"->routeKey,
+				"payload"->data,
 				"payload_encoding"->"string"],
 				"JSON"
 			],
 			"ContentType"->"application/json"
 		]
+	],
+	"Body"
+]//xxl`github`Level0`toJson
+
+
+exchangePublish[exchange_String,routeKey_String,data_Association|data_List,ops:OptionsPattern[]]:=exchangePublish[exchange,routeKey,ExportString[data,"JSON"],ops]
+
+
+ClearAll[exchanges]
+
+
+exchanges[]:=URLRead[
+		HTTPRequest[
+			rabbitWebInfo["host"]<>":"<>rabbitWebInfo["port"]<>"/api/exchanges/"<>URLEncode["/"],
+			Association["Username"->rabbitWebInfo["username"],"Password"->rabbitWebInfo["password"]]
+		],
+		"Body"
+]//xxl`github`Level0`toJson//Map[#["name"]&,#]&
+
+
+ClearAll[exchangeBindings]
+
+
+exchangeBindings[exchange_String]:=URLRead[
+	HTTPRequest[
+		rabbitWebInfo["host"]<>":"<>rabbitWebInfo["port"]<>"/api/exchanges/"<>URLEncode["/"]<>"/"<>exchange<>"/bindings/source",
+		Association["Username"->rabbitWebInfo["username"],"Password"->rabbitWebInfo["password"]]
 	],
 	"Body"
 ]//xxl`github`Level0`toJson
