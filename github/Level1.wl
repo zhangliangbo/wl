@@ -132,13 +132,10 @@ redisListPosition::usage="redisListPosition[key,pattern]list\:6307\:5b9a\:503c\:
 Begin["`Private`"]
 
 
-If[JLink`JavaLink[]===Null,JLink`InstallJava[]];
-
-
 JLink`AddToClassPath["D:\\level\\level1\\build\\libs\\level1-1.0.0-all.jar"];
 
 
-If[FreeQ[LoadedJavaClasses[],JavaClass[#,___]],LoadJavaClass[#]]&/@
+JLink`LoadJavaClass[#]&/@
 	{"xxl.jdbc.JdbcSource","xxl.jdbc.SQLExecute"};
 
 

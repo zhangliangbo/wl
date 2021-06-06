@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-BeginPackage["xxl`rabbitmq`Web`",{"xxl`github`Level0`"}]
+BeginPackage["xxl`rabbitmq`Web`",{"xxl`lang`Util`"}]
 
 
 rabbitWebInfo::usage="RabbitWebInfo[]\:8bbe\:7f6erabbitmq\:7684\:4fe1\:606f"
@@ -61,7 +61,7 @@ queues[]:=URLRead[
 			Association["Username"->rabbitWebInfo["username"],"Password"->rabbitWebInfo["password"]]
 		],
 		"Body"
-]//xxl`github`Level0`toJson//Map[#["name"]&,#]&
+]//xxl`lang`Util`jsonAssoc//Map[#["name"]&,#]&
 
 
 ClearAll[queueBindings]
@@ -73,7 +73,7 @@ queueBindings[queue_String]:=URLRead[
 		Association["Username"->rabbitWebInfo["username"],"Password"->rabbitWebInfo["password"]]
 	],
 	"Body"
-]//xxl`github`Level0`toJson
+]//xxl`lang`Util`jsonAssoc
 
 
 ClearAll[queueGet]
@@ -91,7 +91,7 @@ queueGet[queue_String,count_Integer,requeue:(True|False)]:=URLRead[
 		]
 	],
 	"Body"
-]//xxl`github`Level0`toJson
+]//xxl`lang`Util`jsonAssoc
 
 
 ClearAll[queueGetOne]
@@ -112,7 +112,7 @@ exchangeBindings[exchange_String]:=URLRead[
 		Association["Username"->rabbitWebInfo["username"],"Password"->rabbitWebInfo["password"]]
 	],
 	"Body"
-]//xxl`github`Level0`toJson
+]//xxl`lang`Util`jsonAssoc
 
 
 ClearAll[exchangePublish]
@@ -139,7 +139,7 @@ exchangePublish[exchange_String,routeKey_String,data_String,OptionsPattern[]]:=U
 		]
 	],
 	"Body"
-]//xxl`github`Level0`toJson
+]//xxl`lang`Util`jsonAssoc
 
 
 exchangePublish[exchange_String,routeKey_String,data_Association|data_List,ops:OptionsPattern[]]:=exchangePublish[exchange,routeKey,ExportString[data,"JSON"],ops]
@@ -154,7 +154,7 @@ exchanges[]:=URLRead[
 			Association["Username"->rabbitWebInfo["username"],"Password"->rabbitWebInfo["password"]]
 		],
 		"Body"
-]//xxl`github`Level0`toJson//Map[#["name"]&,#]&
+]//xxl`lang`Util`jsonAssoc//Map[#["name"]&,#]&
 
 
 ClearAll[exchangeBindings]
@@ -166,7 +166,7 @@ exchangeBindings[exchange_String]:=URLRead[
 		Association["Username"->rabbitWebInfo["username"],"Password"->rabbitWebInfo["password"]]
 	],
 	"Body"
-]//xxl`github`Level0`toJson
+]//xxl`lang`Util`jsonAssoc
 
 
 End[]

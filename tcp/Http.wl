@@ -6,6 +6,9 @@ BeginPackage["xxl`tcp`Http`",{"xxl`Main`"}]
 httpInfo::usage="httpInfo[]httpInfo\:4fe1\:606f"
 
 
+http::usage="http[method,url]http\:8bf7\:6c42"
+
+
 get::usage="get[path]get\:8bf7\:6c42"
 
 
@@ -28,14 +31,19 @@ httpInfo[OptionsPattern[]]:=Association[
 	"gateway"->OptionValue["gateway"],
 	"username"->OptionValue["username"],
 	"password"->OptionValue["password"],
-	"token"->OptionValue["token"]
+	"token"->OptionValue["token"],
+	"appKey"->OptionValue["appKey"]
 ];
 
 
 httpInfo[option_String,OptionsPattern[]]:=OptionValue[option];
 
 
-Options[httpInfo]={"gateway"->"http://localhost:8080","username"->"admin","password"->"123456","token"->Null};
+Options[httpInfo]={"gateway"->"http://localhost:8080",
+	"username"->"admin",
+	"password"->"123456",
+	"token"->Null,
+	"appKey"->Null};
 
 
 Clear[http];
@@ -46,7 +54,11 @@ http[method_String,url_String,o:OptionsPattern[]]:=URLRead[
 		url,
 		Association[
 			Method->method,
-			"Headers"->{"Authorization"->httpInfo["token"],"accept"->"application/json;charset=UTF-8","Content-Type"->"application/json"},
+			"Headers"->Union[{"Authorization"->httpInfo["token"],
+				"userSession"->httpInfo["token"],
+				"app-key"->httpInfo["appKey"],
+				"accept"->"application/json;charset=UTF-8",
+				"Content-Type"->"application/json"},OptionValue["headers"]],
 			"Query"->OptionValue["query"],
 			"Body"->OptionValue["body"],
 			"ContentType"->"application/json"
@@ -57,7 +69,7 @@ http[method_String,url_String,o:OptionsPattern[]]:=URLRead[
 ];
 
 
-Options[http]={"query"->{},"body"->{}};
+Options[http]={"headers"->{},"query"->{},"body"->{}};
 
 
 ClearAll[get,post,delete,put]
