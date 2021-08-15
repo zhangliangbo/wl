@@ -57,11 +57,10 @@ http[method_String,url_String,o:OptionsPattern[]]:=URLRead[
 			"Headers"->Union[{"Authorization"->httpInfo["token"],
 				"userSession"->httpInfo["token"],
 				"app-key"->httpInfo["appKey"],
-				"accept"->"application/json;charset=UTF-8",
-				"Content-Type"->"application/json"},OptionValue["headers"]],
+				"accept"->"application/json;charset=UTF-8"},OptionValue["headers"]],
 			"Query"->OptionValue["query"],
 			"Body"->OptionValue["body"],
-			"ContentType"->"application/json"
+			"ContentType"->If[MemberQ[OptionValue["body"],_File,Infinity],Automatic,"application/json"]
 		]
 	],
 	"Body",

@@ -25,7 +25,7 @@ JLink`LoadJavaClass[#]&/@
 ClearAll[toAssoc]
 
 
-toAssoc[object_]:=JavaBlock[
+toAssoc[object_]:=JLink`JavaBlock[
 	Module[
 		{rules},
 		If[!JLink`InstanceOf[object,"java.util.Map"],Return[object]];

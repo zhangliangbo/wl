@@ -117,6 +117,9 @@ redisSetScan::usage="redisSetScan[key,pattern]set\:6a21\:7cca\:5339\:914d"
 redisSetRandom::usage="redisSetRandom[key,count]set\:968f\:673a\:6210\:5458"
 
 
+redisSetIsMember::usage="redisSetIsMember[key,value]set\:5305\:542b\:6210\:5458"
+
+
 redisListLen::usage="redisListLen[key]list\:5927\:5c0f"
 
 
@@ -432,6 +435,12 @@ ClearAll[redisSetRandom]
 
 
 redisSetRandom[key_String,count_Integer]:=xxl`redis`RedisSet`random[key,count]//JLink`JavaObjectToExpression
+
+
+ClearAll[redisSetIsMember]
+
+
+redisSetIsMember[key_String,value_String]:=xxl`redis`RedisSet`isMember[key,value]//JLink`JavaObjectToExpression
 
 
 ClearAll[redisListLen]
