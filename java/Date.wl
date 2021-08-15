@@ -26,6 +26,7 @@ ClearAll[javaFormatDate];
 javaFormatDate[s_String,OptionsPattern[]]:=JLink`JavaBlock[
 	Module[
 		{obj},
+		If[s===Null||s==="",Return[Null]];
 		obj=java`time`LocalDate`parse[JLink`MakeJavaObject[s],java`time`format`DateTimeFormatter`ofPattern[OptionValue["oldPattern"]]];
 		obj@format@java`time`format`DateTimeFormatter`ofPattern[OptionValue["newPattern"]]
 	]
@@ -41,6 +42,7 @@ ClearAll[javaFormatTime];
 javaFormatTime[s_String,OptionsPattern[]]:=JLink`JavaBlock[
 	Module[
 		{obj},
+		If[s===Null||s==="",Return[Null]];
 		obj=java`time`LocalTime`parse[JLink`MakeJavaObject[s],java`time`format`DateTimeFormatter`ofPattern[OptionValue["oldPattern"]]];
 		obj@format@java`time`format`DateTimeFormatter`ofPattern[OptionValue["newPattern"]]
 	]
@@ -56,6 +58,7 @@ ClearAll[javaFormatDateTime];
 javaFormatDateTime[s_String,OptionsPattern[]]:=JLink`JavaBlock[
 	Module[
 		{obj},
+		If[s===Null||s==="",Return[Null]];
 		obj=java`time`LocalDateTime`parse[JLink`MakeJavaObject[s],java`time`format`DateTimeFormatter`ofPattern[OptionValue["oldPattern"]]];
 		obj@format@java`time`format`DateTimeFormatter`ofPattern[OptionValue["newPattern"]]
 	]
