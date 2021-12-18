@@ -6,7 +6,7 @@ BeginPackage["xxl`cloud`Eureka`"]
 apps::usage="apps[host] \:6240\:6709\:7684\:670d\:52a1ID"
 
 
-instances::usae="instances[host,app] \:67e5\:8be2\:670d\:52a1app\:7684\:6240\:6709\:5b9e\:4f8bID"
+instances::usage="instances[host,app] \:67e5\:8be2\:670d\:52a1app\:7684\:6240\:6709\:5b9e\:4f8bID"
 
 
 offline::usage="offline[host,app,instance]\:4e0b\:7ebf\:67d0\:4e2a\:670d\:52a1\:7684\:67d0\:4e2a\:5b9e\:4f8b"
