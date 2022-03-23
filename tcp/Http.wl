@@ -58,7 +58,7 @@ http[method_String,url_String,o:OptionsPattern[]]:=URLRead[
 				"userSession"->httpInfo["token"],
 				"app-key"->httpInfo["appKey"],
 				"accept"->"application/json;charset=UTF-8"},OptionValue["headers"]],
-			"Query"->OptionValue["query"],
+			"Query"->DeleteCases[OptionValue["query"],_->Null],
 			"Body"->OptionValue["body"],
 			"ContentType"->If[MemberQ[OptionValue["body"],_File,Infinity],Automatic,"application/json"]
 		]

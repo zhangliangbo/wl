@@ -12,12 +12,31 @@ javaFormatTime::usage="javaFormatTime[s] \:683c\:5f0f\:5316\:65f6\:95f4"
 javaFormatDateTime::usage="javaFormatDateTime[s] \:683c\:5f0f\:5316\:65e5\:671f\:65f6\:95f4"
 
 
+javaFormatMillis::usage="javaFormatMillis[s] \:683c\:5f0f\:5316\:6beb\:79d2\:65f6\:95f4"
+
+
 Begin["`Private`"]
 
 
 JLink`LoadJavaClass[#]&/@
 	{"java.time.format.DateTimeFormatter","java.time.LocalDate","java.time.LocalTime",
-	"java.time.LocalDateTime"};
+	"java.time.LocalDateTime","java.util.Date","java.time.ZoneId"};
+
+
+ClearAll[javaFormatMillis];
+
+
+javaFormatMillis[s_Integer,OptionsPattern[]]:=JLink`JavaBlock[
+	Module[
+		{date,obj},
+		date=JavaNew["java.util.Date",s];
+		obj=java`time`LocalDateTime`ofInstant[date@toInstant[],java`time`ZoneId`systemDefault[]];
+		obj@format@java`time`format`DateTimeFormatter`ofPattern[OptionValue["pattern"]]
+	]
+];
+
+
+Options[javaFormatMillis]={"pattern"->"yyyy-MM-dd HH:mm:ss.SSS"}
 
 
 ClearAll[javaFormatDate];

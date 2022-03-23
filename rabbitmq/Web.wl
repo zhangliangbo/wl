@@ -9,6 +9,9 @@ rabbitWebInfo::usage="RabbitWebInfo[]\:8bbe\:7f6erabbitmq\:7684\:4fe1\:606f"
 queues::usage="queues[]\:6240\:6709\:7684\:961f\:5217"
 
 
+queueSize::usage="queueSize[queue]\:961f\:5217\:5927\:5c0f"
+
+
 queueBindings::usage="queueBindings[queue]\:961f\:5217\:7684\:7ed1\:5b9a\:4fe1\:606f"
 
 
@@ -62,6 +65,18 @@ queues[]:=URLRead[
 		],
 		"Body"
 ]//xxl`lang`Util`jsonAssoc//Map[#["name"]&,#]&
+
+
+ClearAll[queueSize]
+
+
+queueSize[queue_String]:=URLRead[
+		HTTPRequest[
+			rabbitWebInfo["host"]<>":"<>rabbitWebInfo["port"]<>"/api/queues/"<>URLEncode["/"]<>"/"<>queue,
+			Association["Username"->rabbitWebInfo["username"],"Password"->rabbitWebInfo["password"]]
+		],
+		"Body"
+]//xxl`lang`Util`jsonAssoc//#["messages"]&
 
 
 ClearAll[queueBindings]

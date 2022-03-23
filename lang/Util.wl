@@ -39,7 +39,16 @@ intString::usage="intString[s] \:6574\:5f62\:5b57\:7b26\:4e32 "
 stashField::usage="stashField[s,field] logstash\:7684\:6d88\:606f\:5b57\:6bb5"
 
 
+assocJson::usage="assocJson[data] \:5bfc\:51fajson\:4f18\:5316\:7684\:51fd\:6570"
+
+
 Begin["`Private`"]
+
+
+ClearAll[assocJson];
+
+
+assocJson[data_:(List|Association)]:=ExportString[data,"JSON"]//StringReplace[#,"\\"->""]&
 
 
 ClearAll[stashField]
