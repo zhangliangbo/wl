@@ -12,6 +12,9 @@ toList::usage="toList[map] map\:8f6c\:5217\:8868"
 toDataset::usage="toDataset[map] map\:8f6cDataset"
 
 
+flatJsonFile::usage="flatJsonFile[file] json\:6587\:4ef6\:62c9\:5e73"
+
+
 Begin["`Private`"]
 
 
@@ -19,7 +22,21 @@ JLink`AddToClassPath["D:\\level\\level0\\build\\libs\\level0-1.0.1-all.jar"];
 
 
 JLink`LoadJavaClass[#]&/@
-	{"xxl.mathematica.java.Converter"};
+	{"xxl.mathematica.java.Converter","xxl.mathematica.java.Json","xxl.mathematica.io.ImportString"};
+
+
+ClearAll[flatJsonFile]
+
+
+flatJsonFile[s_String]:=JLink`JavaBlock[
+	Module[
+		{},
+		xxl`mathematica`java`Json`flatFile[s]//JLink`JavaObjectToExpression
+	]
+];
+
+
+SetAttributes[flatJsonFile,{Listable}]
 
 
 ClearAll[toAssoc]
